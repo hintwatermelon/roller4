@@ -33,6 +33,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -109,7 +110,7 @@ public class MediaCollection {
                 String fileName = createFileName(website, 
                     (slug != null) ? slug : Utilities.replaceNonAlphanumeric(title,' '), contentType);
                 try {
-                    tempFile = File.createTempFile(fileName, "tmp");
+                    tempFile = Files.createTempFile(fileName, "tmp").toFile();
                     FileOutputStream fos = new FileOutputStream(tempFile);
                     Utilities.copyInputToOutput(is, fos);
                     fos.close();
@@ -382,7 +383,7 @@ public class MediaCollection {
             if (pathInfo.length > 1) {
                 // Save to temp file
                 try {
-                    tempFile = File.createTempFile(UUID.randomUUID().toString(), "tmp");
+                    tempFile = Files.createTempFile(UUID.randomUUID().toString(), "tmp").toFile();
                     FileOutputStream fos = new FileOutputStream(tempFile);
                     Utilities.copyInputToOutput(is, fos);
                     fos.close();
