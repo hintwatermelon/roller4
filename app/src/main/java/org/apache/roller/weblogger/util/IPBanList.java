@@ -18,6 +18,7 @@
 
 package org.apache.roller.weblogger.util;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -153,7 +154,7 @@ public final class IPBanList {
                 Set<String> newBannedIpList = newThreadSafeSet();
 
                 String ip = null;
-                while((ip = in.readLine()) != null) {
+                while((ip = BoundedLineReader.readLine(in, 5_000_000)) != null) {
                     newBannedIpList.add(ip);
                 }
 

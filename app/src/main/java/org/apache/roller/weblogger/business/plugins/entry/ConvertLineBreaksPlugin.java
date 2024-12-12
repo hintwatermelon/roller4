@@ -18,6 +18,7 @@
 
 package org.apache.roller.weblogger.business.plugins.entry;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.StringReader;
 import org.apache.commons.logging.Log;
@@ -98,7 +99,7 @@ public class ConvertLineBreaksPlugin implements WeblogEntryPlugin {
             
             String line;
             boolean insidePara = false;
-            while((line = br.readLine()) != null) {
+            while((line = BoundedLineReader.readLine(br, 5_000_000)) != null) {
                 
                 if(!insidePara && !line.isBlank()) {
                     // start of a new paragraph
