@@ -18,6 +18,7 @@
 
 package org.apache.roller.weblogger.ui.rendering.plugins.comments;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -84,7 +85,7 @@ public class AkismetCommentValidator implements CommentValidator {
             osr.close();
 
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream())); 
-            String response = br.readLine();
+            String response = BoundedLineReader.readLine(br, 5_000_000);
             if ("true".equals(response)) {
                 messages.addError("comment.validator.akismetMessage");
                 return 0;

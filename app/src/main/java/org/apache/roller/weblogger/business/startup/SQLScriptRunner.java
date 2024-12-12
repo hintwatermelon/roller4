@@ -18,6 +18,7 @@
 
 package org.apache.roller.weblogger.business.startup;
 
+import io.github.pixee.security.BoundedLineReader;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.*;
@@ -47,7 +48,7 @@ public class SQLScriptRunner {
         try (BufferedReader in = new BufferedReader(new InputStreamReader(is))) {
             String command = "";
             String line;
-            while ((line = in.readLine()) != null) {
+            while ((line = BoundedLineReader.readLine(in, 5_000_000)) != null) {
                 line = line.trim();
                 
                 // ignore lines starting with "--"

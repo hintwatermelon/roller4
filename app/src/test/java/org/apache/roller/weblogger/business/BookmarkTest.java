@@ -18,6 +18,7 @@
 
 package org.apache.roller.weblogger.business;
 
+import io.github.pixee.security.BoundedLineReader;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.roller.weblogger.TestUtils;
@@ -323,7 +324,7 @@ public class BookmarkTest  {
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         String s = null;
         StringBuilder sb = new StringBuilder();
-        while ( (s=br.readLine()) != null ) {
+        while ( (s=BoundedLineReader.readLine(br, 5_000_000)) != null ) {
             sb.append( s );
         }
         return sb.toString();

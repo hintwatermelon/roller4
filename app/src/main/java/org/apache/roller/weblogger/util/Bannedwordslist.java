@@ -18,6 +18,7 @@
 /* Created on Nov 11, 2003 */
 package org.apache.roller.weblogger.util;
 
+import io.github.pixee.security.BoundedLineReader;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import java.io.BufferedReader;
@@ -230,7 +231,7 @@ public final class Bannedwordslist {
         try {
             in = new BufferedReader(
                     new InputStreamReader( txtStream, StandardCharsets.UTF_8) );
-            while ((line = in.readLine()) != null) {
+            while ((line = BoundedLineReader.readLine(in, 5_000_000)) != null) {
                 if (line.startsWith("#")) {
                     readComment(line);
                 } else {
