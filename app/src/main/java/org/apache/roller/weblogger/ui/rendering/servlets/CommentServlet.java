@@ -18,6 +18,7 @@
 
 package org.apache.roller.weblogger.ui.rendering.servlets;
 
+import static io.github.pixee.security.jakarta.PathValidator.validateDispatcherPath;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Iterator;
@@ -304,7 +305,7 @@ public class CommentServlet extends HttpServlet {
             cf.setError(error);
             request.setAttribute("commentForm", cf);
             RequestDispatcher dispatcher = request
-                    .getRequestDispatcher(dispatch_url);
+                    .getRequestDispatcher(validateDispatcherPath(dispatch_url));
             dispatcher.forward(request, response);
             return;
         }
@@ -415,7 +416,7 @@ public class CommentServlet extends HttpServlet {
 
         log.debug("comment processed, forwarding to " + dispatch_url);
         RequestDispatcher dispatcher = request
-                .getRequestDispatcher(dispatch_url);
+                .getRequestDispatcher(validateDispatcherPath(dispatch_url));
         dispatcher.forward(request, response);
     }
 

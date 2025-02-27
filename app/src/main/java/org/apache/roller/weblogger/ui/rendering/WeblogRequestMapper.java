@@ -18,6 +18,7 @@
 
 package org.apache.roller.weblogger.ui.rendering;
 
+import static io.github.pixee.security.jakarta.PathValidator.validateDispatcherPath;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
@@ -235,7 +236,7 @@ public class WeblogRequestMapper implements RequestMapper {
         
         // dispatch to forward url
         log.debug("forwarding to "+forwardUrl);
-        RequestDispatcher dispatch = request.getRequestDispatcher(forwardUrl);
+        RequestDispatcher dispatch = request.getRequestDispatcher(validateDispatcherPath(forwardUrl));
         dispatch.forward(request, response);
         
         // we dealt with this request ourselves, so return "true"
