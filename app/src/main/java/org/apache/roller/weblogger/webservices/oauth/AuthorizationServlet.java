@@ -17,6 +17,7 @@
 
 package org.apache.roller.weblogger.webservices.oauth;
 
+import io.github.pixee.security.Newlines;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -152,7 +153,7 @@ public class AuthorizationServlet extends HttpServlet {
             }
 
             response.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
-            response.setHeader("Location", callback);
+            response.setHeader("Location", Newlines.stripAll(callback));
         }
     }
 
