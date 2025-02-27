@@ -21,6 +21,8 @@
 
 package org.apache.roller.weblogger.util;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -55,7 +57,7 @@ public class StandaloneWebappClassLoader extends URLClassLoader {
         
         // Added WEB-INF/classes
         String classesPath = webappDir + FS + "WEB-INF" + FS + "classes" + FS;
-        urlList.add(new URL("file://" + classesPath));
+        urlList.add(Urls.create("file://" + classesPath, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS));
         
         // Add additional jars
         addURLs(jarsDir, urlList);
@@ -69,7 +71,7 @@ public class StandaloneWebappClassLoader extends URLClassLoader {
         
         for (int i=0; i<libJarNames.length; i++) {
             String url = "file://" + dirPath + FS + libJarNames[i];
-            urlList.add(new URL(url));
+            urlList.add(Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS));
         }
     }
 }

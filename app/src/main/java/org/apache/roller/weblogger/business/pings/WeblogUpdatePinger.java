@@ -18,6 +18,8 @@
 
 package org.apache.roller.weblogger.business.pings;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.roller.weblogger.config.PingConfig;
@@ -116,7 +118,7 @@ public final class WeblogUpdatePinger {
 
         // Send the ping.
         XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
-        config.setServerURL(new URL(pingTargetUrl));
+        config.setServerURL(Urls.create(pingTargetUrl, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS));
         XmlRpcClient client = new XmlRpcClient();
         client.setConfig(config);
         PingResult pingResult = parseResult(client.execute("weblogUpdates.ping", params.toArray()));

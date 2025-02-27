@@ -18,6 +18,8 @@
 
 package org.apache.roller.weblogger.util;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.MalformedURLException;
@@ -80,7 +82,7 @@ public class Trackback {
         } else {
             // test url
             try {
-                new URL(tURL);
+                Urls.create(tURL, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
             } catch(MalformedURLException ex) {
                 // bad url
                 throw new IllegalArgumentException("bad url: "+tURL);

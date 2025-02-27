@@ -18,6 +18,8 @@
  */
 package org.apache.roller.weblogger.business.jpa;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -109,7 +111,7 @@ public class JPAPingTargetManagerImpl implements PingTargetManager {
             return false;
         }
         try {
-            URL parsedUrl = new URL(url);
+            URL parsedUrl = Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
             // OK.  If we get here, it parses ok.  Now just check 
             // that the protocol is http and there is a host portion.
             boolean isHttp = parsedUrl.getProtocol().equals("http");
@@ -128,7 +130,7 @@ public class JPAPingTargetManagerImpl implements PingTargetManager {
             return false;
         }
         try {
-            URL parsedUrl = new URL(url);
+            URL parsedUrl = Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
             String host = parsedUrl.getHost();
             if (host == null || host.isBlank()) {
                 return false;

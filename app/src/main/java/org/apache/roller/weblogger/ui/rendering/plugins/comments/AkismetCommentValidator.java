@@ -18,6 +18,8 @@
 
 package org.apache.roller.weblogger.ui.rendering.plugins.comments;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -70,7 +72,7 @@ public class AkismetCommentValidator implements CommentValidator {
         sb.append("comment_content="     ).append(comment.getContent());
 
         try {
-            URL url = new URL("http://" + apikey + ".rest.akismet.com/1.1/comment-check");
+            URL url = Urls.create("http://" + apikey + ".rest.akismet.com/1.1/comment-check", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
             URLConnection conn = url.openConnection();
             conn.setDoOutput(true);
 

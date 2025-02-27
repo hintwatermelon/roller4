@@ -18,6 +18,8 @@
 /* Created on Nov 11, 2003 */
 package org.apache.roller.weblogger.util;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import java.io.BufferedReader;
@@ -109,7 +111,7 @@ public final class Bannedwordslist {
         try {
             mLogger.debug("Attempting to download MT bannedwordslist");
             
-            URL url = new URL(BANNEDWORDSLIST_URL);
+            URL url = Urls.create(BANNEDWORDSLIST_URL, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
             HttpURLConnection connection = 
                     (HttpURLConnection) url.openConnection();
             
