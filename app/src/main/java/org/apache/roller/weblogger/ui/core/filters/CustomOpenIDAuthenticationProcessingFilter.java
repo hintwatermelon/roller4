@@ -18,6 +18,8 @@
 
 package org.apache.roller.weblogger.ui.core.filters;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -92,7 +94,7 @@ public class CustomOpenIDAuthenticationProcessingFilter
 
         if (mapping == null) {
             try {
-                URL url = new URL(returnToUrl);
+                URL url = Urls.create(returnToUrl, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
                 int port = url.getPort();
 
                 StringBuilder realmBuffer = new StringBuilder(returnToUrl.length())

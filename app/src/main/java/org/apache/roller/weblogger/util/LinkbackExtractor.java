@@ -21,6 +21,8 @@ import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedInput;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -87,7 +89,7 @@ public class LinkbackExtractor
 
     //------------------------------------------------------------------------
     private void extractByParsingHtml(String refererURL, String requestURL) throws IOException {
-        URL url = new URL(refererURL);
+        URL url = Urls.create(refererURL, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         InputStream is = url.openStream();
 
         mRefererURL = refererURL;
@@ -147,7 +149,7 @@ public class LinkbackExtractor
             throws FeedException, IOException {
         SyndFeedInput feedInput = new SyndFeedInput();       
         SyndFeed feed = feedInput.build(
-            new InputStreamReader(new URL(rssLink).openStream()));
+            new InputStreamReader(Urls.create(rssLink, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).openStream()));
         String feedTitle = feed.getTitle();
 
         int count = 0;
@@ -317,7 +319,7 @@ public class LinkbackExtractor
                     {
                         try
                         {
-                            URL url = new URL(mRefererURL);
+                            URL url = Urls.create(mRefererURL, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
                             mRssLink = url.getProtocol() + "://"
                                     + url.getHost() + ":" + url.getPort()
                                     + mRssLink;

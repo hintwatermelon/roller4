@@ -18,6 +18,8 @@
 
 package org.apache.roller.weblogger.ui.rendering;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
@@ -140,7 +142,7 @@ public class WeblogRequestMapper implements RequestMapper {
         if ( multiHostNameURL != null ) {
 
             // there is, so check that configured hostname matches the one in the request
-            URL weblogAbsoluteURL = new URL( multiHostNameURL );
+            URL weblogAbsoluteURL = Urls.create(multiHostNameURL, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
             String headerHost = request.getHeader("Host");
             String configHost = weblogAbsoluteURL.getHost();
 
