@@ -18,6 +18,7 @@
 
 package org.apache.roller.weblogger.ui.rendering.util;
 
+import io.github.pixee.security.Newlines;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -112,7 +113,7 @@ public final class ModDateHeaderUtil {
 			// use the same date we sent when we created the ETag the
 			// first time through
 			response.setHeader("Last-Modified",
-					request.getHeader("If-Modified-Since"));
+					Newlines.stripAll(request.getHeader("If-Modified-Since")));
 
 			return true;
 		} else {
@@ -151,7 +152,7 @@ public final class ModDateHeaderUtil {
 
 			String eTag = deviceType.name();
 
-			response.setHeader("ETag", eTag);
+			response.setHeader("ETag", Newlines.stripAll(eTag));
 		}
 
 		response.setDateHeader("Last-Modified", lastModifiedTimeMillis);
